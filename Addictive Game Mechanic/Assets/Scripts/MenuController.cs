@@ -41,7 +41,7 @@ public class MenuController : MonoBehaviour
         {
             ScorePanel.SetActive(true); // turns on the score on the main menu
             highScoreFloat = PlayerPrefs.GetFloat("HighScore"); // sets the float
-            highScoreText.text = "High Score: " + Mathf.RoundToInt(highScoreFloat); // sets the text to show the high score
+            highScoreText.text = "HIGH SCORE: " + Mathf.RoundToInt(highScoreFloat); // sets the text to show the high score
         }
         else // else if there is now player pref called "HighScore"
         {

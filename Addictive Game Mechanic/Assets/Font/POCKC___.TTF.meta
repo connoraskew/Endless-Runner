@@ -1,17 +1,18 @@
 fileFormatVersion: 2
-guid: d7662a35681f5684f9e110b7a03ad08f
-timeCreated: 1512665695
-licenseType: Pro
+guid: 972cc6a679ce0674a9e885d61aec0dc4
+timeCreated: 1527626112
+licenseType: Free
 TrueTypeFontImporter:
+  externalObjects: {}
   serializedVersion: 4
   fontSize: 16
   forceTextureCase: -2
   characterSpacing: 0
   characterPadding: 1
   includeFontData: 1
-  fontName: DS-Digital
+  fontName: Pocket Calculator
   fontNames:
-  - DS-Digital
+  - Pocket Calculator
   fallbackFontReferences: []
   customCharacters: 
   fontRenderingMode: 0

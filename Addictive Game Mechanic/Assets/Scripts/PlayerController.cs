@@ -81,10 +81,16 @@ public class PlayerController : MonoBehaviour
         // set the movement 
         myRigidbody.velocity = new Vector2(moveSpeed, myRigidbody.velocity.y);
 
-        /*
+
         // if we press either jump button
+        //if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0))
+
+        // Input.touchCount > 0 || 
+        // if (Input.GetTouch(0).phase == TouchPhase.Began)
+
+#if UNITY_EDITOR
         if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0))
-        {            
+        {
             // if we are currently on the ground
             if (isGrounded)
             {
@@ -98,10 +104,29 @@ public class PlayerController : MonoBehaviour
                 DoubleJump();
             }
         }
-        */
-        /*
+        #else
+
+        if (Input.touchCount > 0)
+        {
+            if (Input.GetTouch(0).phase == TouchPhase.Began)
+            {
+                // if we are currently on the ground
+                if (isGrounded)
+                {
+                    // call jump
+                    Jump();
+                }
+                // if the player is already in the air and they can jump again
+                if (!isGrounded && canDoubleJump)
+                {
+                    // call double jump
+                    DoubleJump();
+                }
+            } 
+        }
+#endif
         // if the buttons are held down
-        if (Input.GetKey(KeyCode.Space) || Input.GetMouseButton(0))
+        if (Input.touchCount > 0 || Input.GetKey(KeyCode.Space) || Input.GetMouseButton(0))
         {
             // and we still have some gogo juice in the tank
             if (jumpTimeCounter > 0)
@@ -118,7 +143,7 @@ public class PlayerController : MonoBehaviour
                 }
             }
         }
-        */
+        
 
         // when we let go of the jump buttons
         if (Input.GetKeyUp(KeyCode.Space) || Input.GetMouseButtonUp(0))
@@ -150,35 +175,12 @@ public class PlayerController : MonoBehaviour
         speedIncreaseMilestone *= speedMultiplyer;
     }
 
-    public void JumpPressed()
+    public void Jump()
     {
-        if (isGrounded)
-        {
             // initial burst of energy to make us jump
             myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, jumpForce);
             jumpSound.pitch = Random.Range(1.0f, 1.1f); // change the pitch slightly
-            jumpSound.Play(); // play the jump sound
-        }
-        // if the player is already in the air and they can jump again
-        if (!isGrounded && canDoubleJump)
-        {
-            // call double jump
-            DoubleJump();
-        }
-
-        if (jumpTimeCounter > 0)
-        {
-            // add more force to the player
-            myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, jumpForce);
-            // use up some gogo juice
-            jumpTimeCounter -= Time.deltaTime;
-            // if the player can play the jumping sound
-            if (canPlayJumpSound)
-            {
-                // call play jump sound
-                PlayJumpSound();
-            }
-        }
+            jumpSound.Play(); // play the jump sound  
     }
 
     void DoubleJump()

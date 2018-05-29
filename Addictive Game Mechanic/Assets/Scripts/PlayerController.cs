@@ -75,38 +75,31 @@ public class PlayerController : MonoBehaviour
         // if we have progressed far enough 
         if (transform.position.x > speedMilestoneCount)
         {
-            // set the next milestone
-            speedMilestoneCount += speedIncreaseMilestone;
-            // increase the movement speed
-            moveSpeed *= speedMultiplyer;
-            speedIncreaseMilestone *= speedMultiplyer;
+            UpDateMilestone();
         }
 
         // set the movement 
         myRigidbody.velocity = new Vector2(moveSpeed, myRigidbody.velocity.y);
 
+        /*
         // if we press either jump button
         if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0))
         {            
             // if we are currently on the ground
             if (isGrounded)
             {
-                // initial burst of energy to make us jump
-                myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, jumpForce);
-                jumpSound.pitch = Random.Range(1.0f, 1.1f); // change the pitch slightly
-                jumpSound.Play(); // play the jump sound
+                // call jump
+                Jump();
             }
             // if the player is already in the air and they can jump again
             if (!isGrounded && canDoubleJump)
             {
-                canDoubleJump = false; // make sure they cant keep jumping
-                myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, jumpForce); // add upwards force
-                jumpTimeCounter = jumpTime; // reset the gogo juice
-                jumpSound.pitch = Random.Range(1.0f, 1.1f); // change the pitch slightly
-                jumpSound.Play();
+                // call double jump
+                DoubleJump();
             }
         }
-
+        */
+        /*
         // if the buttons are held down
         if (Input.GetKey(KeyCode.Space) || Input.GetMouseButton(0))
         {
@@ -120,12 +113,12 @@ public class PlayerController : MonoBehaviour
                 // if the player can play the jumping sound
                 if (canPlayJumpSound)
                 {
-                    jumpSound.pitch = Random.Range(1.0f, 1.3f); // change the pitch slightly
-                    jumpSound.Play(); // play the jumping sound
-                    canPlayJumpSound = false; // stop them from spamming the jump sound
+                    // call play jump sound
+                    PlayJumpSound();
                 }
             }
         }
+        */
 
         // when we let go of the jump buttons
         if (Input.GetKeyUp(KeyCode.Space) || Input.GetMouseButtonUp(0))
@@ -146,6 +139,68 @@ public class PlayerController : MonoBehaviour
         lerpedColor = Color.Lerp(myColour, myColour2, Mathf.PingPong(Time.time, 1));
         // assign the colour
         myRenderer.material.color = lerpedColor;
+    }
+
+    void UpDateMilestone()
+    {
+        // set the next milestone
+        speedMilestoneCount += speedIncreaseMilestone;
+        // increase the movement speed
+        moveSpeed *= speedMultiplyer;
+        speedIncreaseMilestone *= speedMultiplyer;
+    }
+
+    public void JumpPressed()
+    {
+        if (isGrounded)
+        {
+            // initial burst of energy to make us jump
+            myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, jumpForce);
+            jumpSound.pitch = Random.Range(1.0f, 1.1f); // change the pitch slightly
+            jumpSound.Play(); // play the jump sound
+        }
+        // if the player is already in the air and they can jump again
+        if (!isGrounded && canDoubleJump)
+        {
+            // call double jump
+            DoubleJump();
+        }
+
+        if (jumpTimeCounter > 0)
+        {
+            // add more force to the player
+            myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, jumpForce);
+            // use up some gogo juice
+            jumpTimeCounter -= Time.deltaTime;
+            // if the player can play the jumping sound
+            if (canPlayJumpSound)
+            {
+                // call play jump sound
+                PlayJumpSound();
+            }
+        }
+    }
+
+    void DoubleJump()
+    {
+        canDoubleJump = false; // make sure they cant keep jumping
+        myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, jumpForce); // add upwards force
+        jumpTimeCounter = jumpTime; // reset the gogo juice
+        jumpSound.pitch = Random.Range(1.0f, 1.1f); // change the pitch slightly
+        jumpSound.Play(); // play audio
+    }
+
+    public void JumpRelease()
+    {
+        // empty the gogo juice tank
+        jumpTimeCounter = 0;
+    }
+
+    void PlayJumpSound()
+    {
+        jumpSound.pitch = Random.Range(1.0f, 1.3f); // change the pitch slightly
+        jumpSound.Play(); // play the jumping sound
+        canPlayJumpSound = false; // stop them from spamming the jump sound
     }
 
     // if our collider hits another collider 

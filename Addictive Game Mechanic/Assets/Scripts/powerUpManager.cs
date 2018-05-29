@@ -116,6 +116,7 @@ public class powerUpManager : MonoBehaviour
                     safeMode = false; // set the biik here to normal
                     hasMadeItSafe = false; // set the instance checker back to normal
                     spikeImageExtra.SetActive(false); // turn off the extra detail image
+                    canSpikebreak = true;
                 }
                 spikeCounter -= Time.deltaTime; // reduce the counter
             }
@@ -153,30 +154,22 @@ public class powerUpManager : MonoBehaviour
 
         spikeList = FindObjectsOfType<PlatformDestroyer>(); // find all of the objects with the destroyer script on it
 
-
-
-        // for every object it find
-        for (int i = 0; i < spikeList.Length; i++)
+        if (canSpikebreak)
         {
-            // if the object has Spike in its name
-            if (spikeList[i].gameObject.name.Contains("Spike("))
+            // for every object it find
+            for (int i = 0; i < spikeList.Length; i++)
             {
-                // if this is the first time coming in here, play the audio source if it finds 
-                if (canSpikebreak)
-                {
-                    SpikeBreakAudio.pitch = Random.Range(1.0f, 1.3f); // change the pitch slightly
-                    SpikeBreakAudio.Play();
-                    canSpikebreak = false; // only want to play once, set the bool to be false
-                }
-
-                if (spikeList[i].gameObject.activeInHierarchy)
+                // if the object has Spike in its name
+                if (spikeList[i].gameObject.name.Contains("Spike(Clone)"))
                 {
                     spikeList[i].gameObject.SetActive(false); // turn the spikes off
                     Instantiate(brokenSpike, spikeList[i].transform.position, Quaternion.identity);
                 }
             }
+            //canSpikebreak = false; // only want to play once, set the bool to be false
+            SpikeBreakAudio.pitch = Random.Range(1.0f, 1.3f); // change the pitch slightly
+            SpikeBreakAudio.Play();
+            canSpikebreak = false;
         }
-        // letting the audio be played again once all of the spikes have been turned off
-        canSpikebreak = true;
     }
 }

@@ -38,11 +38,8 @@ public class powerUpManager : MonoBehaviour
     private float normalpointsPerSecond;
     private float spikeRate;
 
-
-
     public bool dead; // if the player is dead or not
     public bool canSpikebreak; // if the sound have been played or not
-    public AudioSource SpikeBreakAudio; // the audio used for destroying the spikes
 
     // Use this for initialization
     void Start()
@@ -166,9 +163,6 @@ public class powerUpManager : MonoBehaviour
                     Instantiate(brokenSpike, spikeList[i].transform.position, Quaternion.identity);
                 }
             }
-            //canSpikebreak = false; // only want to play once, set the bool to be false
-            SpikeBreakAudio.pitch = Random.Range(1.0f, 1.3f); // change the pitch slightly
-            SpikeBreakAudio.Play();
             canSpikebreak = false;
         }
     }

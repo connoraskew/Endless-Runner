@@ -34,6 +34,16 @@ public class GameManager : MonoBehaviour
 		//GameAnalytics.NewDesignEvent ("Game Loaded");
     }
 
+	private void StartGame() {
+		//call me at start of a game
+	}
+
+	private void EndGame(int score) {
+		//call me at end of a game
+
+	}
+
+
     // used to show the player they have died
     public void RestartGame()
     {

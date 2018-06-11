@@ -29,19 +29,20 @@ public class GameManager : MonoBehaviour
         // finding the score manager
         theScoreManager = FindObjectOfType<ScoreManager>();
         thePowerUpManager = FindObjectOfType<powerUpManager>();
-
-		//GameAnalytics.Initialize ();
-		//GameAnalytics.NewDesignEvent ("Game Loaded");
+        StartGame();
+        //GameAnalytics.Initialize ();
+        //GameAnalytics.NewDesignEvent ("Game Loaded");
     }
 
-	private void StartGame() {
-		//call me at start of a game
+	private void StartGame()
+    {
+        //call me at start of a game
 	}
 
-	private void EndGame(int score) {
-		//call me at end of a game
-
-	}
+	public void EndGame(int score)
+    {
+        //call me at end of a game
+    }
 
 
     // used to show the player they have died
@@ -82,5 +83,6 @@ public class GameManager : MonoBehaviour
         theScoreManager.ScoreIncreasing = true; // allow the score to start increasing again
         powerUpReset = true; // used to reset the powerup durations
         thePlayer.dead = false; // after resetting everything, turn the player back on
+        StartGame();
     }
 }

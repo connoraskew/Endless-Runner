@@ -192,6 +192,8 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.tag == "killBox" && !dead)
         {
             TimeToDie(); // time to die...
+            int score = Mathf.RoundToInt(FindObjectOfType<ScoreManager>().scoreFloat);
+            theGameManager.EndGame(score);
         }
     }
 

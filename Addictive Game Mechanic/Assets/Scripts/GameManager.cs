@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using GameAnalyticsSDK;
 
 public class GameManager : MonoBehaviour
 {
@@ -31,7 +30,8 @@ public class GameManager : MonoBehaviour
         theScoreManager = FindObjectOfType<ScoreManager>();
         thePowerUpManager = FindObjectOfType<powerUpManager>();
 
-		GameAnalytics.NewProgressionEvent (GAProgressionStatus.Start, "Game Loaded");
+		//GameAnalytics.Initialize ();
+		//GameAnalytics.NewDesignEvent ("Game Loaded");
     }
 
     // used to show the player they have died

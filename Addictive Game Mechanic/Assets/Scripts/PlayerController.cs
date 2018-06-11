@@ -24,11 +24,7 @@ public class PlayerController : MonoBehaviour
     private Renderer myRenderer;
     private Color lerpedColor;
 
-    public AudioSource deathSound; // death sound
-    public AudioSource jumpSound; // jump sound
-
-    // bools used for checking actions
-    public bool canPlayJumpSound;
+    // bool used for checking actions
     private bool canDoubleJump;
 
     // components
@@ -136,11 +132,6 @@ public class PlayerController : MonoBehaviour
                 // use up some gogo juice
                 jumpTimeCounter -= Time.deltaTime;
                 // if the player can play the jumping sound
-                if (canPlayJumpSound)
-                {
-                    // call play jump sound
-                    PlayJumpSound();
-                }
             }
         }
         
@@ -179,8 +170,6 @@ public class PlayerController : MonoBehaviour
     {
             // initial burst of energy to make us jump
             myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, jumpForce);
-            jumpSound.pitch = Random.Range(1.0f, 1.1f); // change the pitch slightly
-            jumpSound.Play(); // play the jump sound  
     }
 
     void DoubleJump()
@@ -188,21 +177,12 @@ public class PlayerController : MonoBehaviour
         canDoubleJump = false; // make sure they cant keep jumping
         myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, jumpForce); // add upwards force
         jumpTimeCounter = jumpTime; // reset the gogo juice
-        jumpSound.pitch = Random.Range(1.0f, 1.1f); // change the pitch slightly
-        jumpSound.Play(); // play audio
     }
 
     public void JumpRelease()
     {
         // empty the gogo juice tank
         jumpTimeCounter = 0;
-    }
-
-    void PlayJumpSound()
-    {
-        jumpSound.pitch = Random.Range(1.0f, 1.3f); // change the pitch slightly
-        jumpSound.Play(); // play the jumping sound
-        canPlayJumpSound = false; // stop them from spamming the jump sound
     }
 
     // if our collider hits another collider 
@@ -238,6 +218,5 @@ public class PlayerController : MonoBehaviour
         moveSpeed = baseMoveSpeed; // reset the players speed 
         speedMilestoneCount = baseSpeedMilestoneCount; // reset how far the player needs to go before increasing speeds
         speedIncreaseMilestone = baseSpeedIncreaseMilestone; // reset the amount we increase the player speed by
-        deathSound.Play(); // play the death sound
     }
 }

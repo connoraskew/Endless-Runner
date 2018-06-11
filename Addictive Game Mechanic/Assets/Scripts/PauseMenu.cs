@@ -8,6 +8,15 @@ public class PauseMenu : MonoBehaviour
     public GameObject pauseMenu; // the pause menu screen
     public GameObject pauseButton; // the pause button
 
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.J))
+        {
+            Restart();
+        }
+    }
+
     // if the pause button is pressed
     public void PauseGame()
     {

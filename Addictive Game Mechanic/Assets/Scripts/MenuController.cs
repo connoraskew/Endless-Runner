@@ -10,6 +10,20 @@ public class MenuController : MonoBehaviour
     public Text highScoreText; // the text component on the object
     private float highScoreFloat; // the high score
 
+    /******************************************
+     * for recording
+    ******************************************/
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.J))
+        {
+            Play();
+        }
+    }
+    /******************************************/
+
+
+
     private void Start()
     {
         UpdateHighScoreText(); // used to update the UI on the main menu
